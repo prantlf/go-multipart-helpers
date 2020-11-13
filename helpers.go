@@ -1,6 +1,10 @@
 // Package helpers helps writing file parts to MIME multipart messages while
 // preserving the original content type inferred from the file extension.
 //
+// CreateFormFile from multipart Writer sets the content type always to
+// `application/octet-stream`. If you need to preserve the content type
+// of the file decided by its file extension, thi spackage will help you.
+//
 // Files can be written using their path by a convenience method:
 //
 //     message := &bytes.Buffer{}
