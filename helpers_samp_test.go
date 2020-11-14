@@ -2,13 +2,12 @@ package helpers_test
 
 import (
 	"bytes"
-	"fmt"
 	"log"
 	"mime/multipart"
-	"regexp"
 	"strings"
 
 	helpers "github.com/prantlf/go-multipart-helpers"
+	"github.com/prantlf/go-multipart-helpers/demo"
 )
 
 func Example() {
@@ -21,7 +20,7 @@ func Example() {
 		log.Fatal(err)
 	}
 	// Write a file.
-	if err := helpers.WriteFile(writer, "file", "test.txt"); err != nil {
+	if err := helpers.WriteFile(writer, "file", "demo/test.txt"); err != nil {
 		log.Fatal(err)
 	}
 	// Finalize rhe message by appending the trailing boundary separatore.
@@ -30,7 +29,7 @@ func Example() {
 	}
 
 	// Make a network request with the composed content type and request body.
-	printRequest(writer.FormDataContentType(), message)
+	demo.PrintRequest(writer.FormDataContentType(), message)
 	// Output:
 	// Content-Type: multipart/form-data; boundary=1879bcd06ac39a4d8fa5
 	// Content-Length: 383
@@ -57,7 +56,7 @@ func ExampleCreateFilePart() {
 	}
 
 	writer.Close()
-	printRequest(writer.FormDataContentType(), message)
+	demo.PrintRequest(writer.FormDataContentType(), message)
 	// Output:
 	// Content-Type: multipart/form-data; boundary=1879bcd06ac39a4d8fa5
 	// Content-Length: 241
@@ -74,12 +73,12 @@ func ExampleWriteFile() {
 	writer := multipart.NewWriter(message)
 
 	// Write a file.
-	if err := helpers.WriteFile(writer, "file", "test.bin"); err != nil {
+	if err := helpers.WriteFile(writer, "file", "demo/test.bin"); err != nil {
 		log.Fatal(err)
 	}
 
 	writer.Close()
-	printRequest(writer.FormDataContentType(), message)
+	demo.PrintRequest(writer.FormDataContentType(), message)
 	// Output:
 	// Content-Type: multipart/form-data; boundary=1879bcd06ac39a4d8fa5
 	// Content-Length: 259
@@ -103,7 +102,7 @@ func ExampleWriteFileReader() {
 	}
 
 	writer.Close()
-	printRequest(writer.FormDataContentType(), message)
+	demo.PrintRequest(writer.FormDataContentType(), message)
 	// Output:
 	// Content-Type: multipart/form-data; boundary=1879bcd06ac39a4d8fa5
 	// Content-Length: 245
@@ -114,35 +113,4 @@ func ExampleWriteFileReader() {
 	//
 	// test
 	// --1879bcd06ac39a4d8fa5--
-}
-
-const commonBoundary = "1879bcd06ac39a4d8fa5"
-
-var contentTypeBoundary = regexp.MustCompile("boundary=.+")
-var requestBodyBoundary = regexp.MustCompile("--[0-9a-z]+")
-
-func printRequest(contentType string, reqBody *bytes.Buffer) {
-	printContentType(contentType)
-	printContentLength(reqBody)
-	fmt.Println()
-	printRequestBody(reqBody)
-}
-
-func printContentType(contentType string) {
-	fmt.Printf("Content-Type: %s\n", contentTypeBoundary.ReplaceAllLiteralString(
-		contentType, "boundary="+commonBoundary))
-}
-
-func printContentLength(reqBody *bytes.Buffer) {
-	fmt.Printf("Content-Length: %d\n", reqBody.Len())
-}
-
-func printRequestBody(reqBody *bytes.Buffer) {
-	fmt.Println(requestBodyBoundary.ReplaceAllLiteralString(
-		stringifyBuffer(reqBody), "--"+commonBoundary))
-}
-
-func stringifyBuffer(reqBody *bytes.Buffer) string {
-	return strings.ReplaceAll(
-		strings.ReplaceAll(reqBody.String(), "\r\n", "\n"), "\n\n\n", "\n\n")
 }

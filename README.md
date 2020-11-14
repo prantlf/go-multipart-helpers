@@ -2,7 +2,7 @@
 
 Helps writing file parts to MIME multipart messages according to [RFC7578] while preserving the original content type inferred from the file extension. See the [documentation] for more information.
 
-CreateFormFile from [multipart writer] sets the content type always to `application/octet-stream`. If you need to preserve the content type of the file decided by its file extension, choose a function among CreateFilePart, WriteFie or WriteFileReader from this package.
+`CreateFormFile` from [multipart writer] sets the content type always to `application/octet-stream`. If you need to preserve the content type of the file decided by its file extension, choose a function among `CreateFilePart`,` WriteFile` or `WriteFileReader` from this package.
 
 ## Installation
 
@@ -17,7 +17,7 @@ Upload a file with comment:
 ```go
 import (
   "net/http"
-  "github.com/prantlf/go-multipart-helpers"
+  helpers "github.com/prantlf/go-multipart-helpers"
 )
 // compose a multipart form-data content
 message := &bytes.Buffer{}

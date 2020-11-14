@@ -9,7 +9,7 @@
 //
 //     message := &bytes.Buffer{}
 //     writer := multipart.NewWriter(message)
-//     err := helpers.WriteFile(writer, "file", "test.bin")
+//     err := helpers.WriteFile(writer, "file", "test.txt")
 //     err := writer.Close()
 package helpers
 
