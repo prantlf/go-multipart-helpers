@@ -19,4 +19,7 @@ clean:
 	go clean
 	rm -rf cover.*
 
+publish:
+	GOPROXY=proxy.golang.org go list -m 'github.com/prantlf/go-multipart-helpers@v$(VERSION)'
+
 .PHONY: vet build test cover clean
