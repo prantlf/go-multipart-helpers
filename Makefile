@@ -13,11 +13,11 @@ test:
 
 cover:
 	go test -coverprofile cover.txt
-	go tool cover -html=cover.txt -o cover.html
+	go tool cover -html=coverage.txt -o coverage.html
 
 clean:
 	go clean
-	rm -rf cover.*
+	rm -rf coverage.*
 
 publish:
 	GOPROXY=proxy.golang.org go list -m 'github.com/prantlf/go-multipart-helpers@v$(VERSION)'
