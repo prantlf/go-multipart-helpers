@@ -1,5 +1,9 @@
 # go-multipart-helpers
 
+[![PkgGoDev](https://pkg.go.dev/badge/github.com/prantlf/go-multipart-helpers)](https://pkg.go.dev/github.com/prantlf/go-multipart-helpers)
+[![Test Status](https://github.com/prantlf/go-multipart-helpers/workflows/Test/badge.svg)](https://github.com/prantlf/go-multipart-helpers/actions)
+[![codecov](https://codecov.io/gh/prantlf/go-multipart-helpers/branch/master/graph/badge.svg?token=XS0COPSRR7)](https://codecov.io/gh/prantlf/go-multipart-helpers)
+
 Helps writing file parts to MIME multipart messages according to [RFC7578] while preserving the original content type inferred from the file extension. See the [documentation] for more information.
 
 `CreateFormFile` from [multipart writer] sets the content type always to `application/octet-stream`. If you need to preserve the content type of the file decided by its file extension, choose a function among `CreateFilePart`,` WriteFile` or `WriteFileReader` from this package.
